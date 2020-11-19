@@ -20,27 +20,22 @@ import javax.inject.{Inject, Singleton}
 import play.api.Configuration
 import play.api.i18n.Lang
 import play.api.mvc.{Call, ControllerComponents}
+import uk.gov.hmrc.eoricommoncomponent.frontend.config.AppConfig
 import uk.gov.hmrc.play.language.{LanguageController, LanguageUtils}
 
 @Singleton
-class EoriLanguageController @Inject() (config: Configuration, languageUtils: LanguageUtils, cc: ControllerComponents)
-    extends LanguageController(config, languageUtils, cc) {
+class EoriLanguageController @Inject() (
+  config: Configuration,
+  languageUtils: LanguageUtils,
+  cc: ControllerComponents,
+  appConfig: AppConfig
+) extends LanguageController(config, languageUtils, cc) {
 
   // TODO Find a way to include a service name in the url
   override protected def fallbackURL: String =
     "/customs-enrolment-services/subscribe" //This will be always register for cds we might need to add a route for fallback cannot be dynamic
 
   override def languageMap: Map[String, Lang] =
-    EoriLanguageController.languageMap
-
-}
-
-object EoriLanguageController {
-
-  def routeToSwitchLanguage: String => Call =
-    (lang: String) => routes.EoriLanguageController.switchToLanguage(lang)
-
-  def languageMap: Map[String, Lang] =
-    Map("english" -> Lang("en"), "cymraeg" -> Lang("cy"))
+    appConfig.languageMap
 
 }

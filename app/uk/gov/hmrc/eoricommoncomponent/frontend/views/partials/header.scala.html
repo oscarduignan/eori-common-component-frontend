@@ -17,7 +17,6 @@
 @import uk.gov.hmrc.eoricommoncomponent.frontend.controllers.routes.ApplicationController._
 @import views.html.language_selection
 @import uk.gov.hmrc.eoricommoncomponent.frontend.controllers.routes.EoriLanguageController._
-@import uk.gov.hmrc.eoricommoncomponent.frontend.controllers.EoriLanguageController._
 @import uk.gov.hmrc.eoricommoncomponent.frontend.models.Journey
 @import uk.gov.hmrc.play.views.html.layouts.BetaBanner
 @import uk.gov.hmrc.eoricommoncomponent.frontend.views.helpers.JourneyName._
@@ -75,7 +74,9 @@
         showFeedbackLinkInBetaBanner = true)
     </div>
 
-    @language_selection(languageMap, routeToSwitchLanguage, Some("language-toggle"), Some("eori-common-component-frontend"))
+    @if(appConfig.languageMap.size > 1){
+       @language_selection(appConfig.languageMap, appConfig.routeToSwitchLanguage, Some("language-toggle"), Some("eori-common-component-frontend"))
+    }
 
 </div>
 

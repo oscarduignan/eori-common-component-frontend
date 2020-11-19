@@ -26,6 +26,7 @@ import uk.gov.hmrc.eoricommoncomponent.frontend.config.AppConfig
 import uk.gov.hmrc.eoricommoncomponent.frontend.controllers.routes.ApplicationController
 import uk.gov.hmrc.eoricommoncomponent.frontend.models.Journey
 import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
+import uk.gov.hmrc.play.language.LanguageUtils
 import util.ControllerSpec
 
 import scala.concurrent.duration.Duration
@@ -34,6 +35,7 @@ class AppConfigSpec extends ControllerSpec with BeforeAndAfterEach {
 
   private val mockConfig: Configuration = mock[Configuration]
   private val mockServiceConfig         = mock[ServicesConfig]
+  private val mockLanguageUtils         = mock[LanguageUtils]
   private val runMode                   = mock[RunMode]
 
   override def beforeEach() {
@@ -172,7 +174,7 @@ class AppConfigSpec extends ControllerSpec with BeforeAndAfterEach {
         when(mockConfig.getOptional[String]("routes-to-block")).thenReturn(Some("register"))
         when(mockConfig.get[String]("external-url.get-cds-eori")).thenReturn("/config-url")
 
-        val testAppConfig = new AppConfig(mockConfig, mockServiceConfig, runMode, "appName")
+        val testAppConfig = new AppConfig(mockConfig, mockServiceConfig, runMode, mockLanguageUtils, "appName")
 
         testAppConfig.externalGetEORILink(atarService) shouldBe "/config-url"
       }
@@ -180,7 +182,7 @@ class AppConfigSpec extends ControllerSpec with BeforeAndAfterEach {
       "register is un-blocked" in {
         when(mockConfig.getOptional[String]("routes-to-block")).thenReturn(None)
 
-        val testAppConfig = new AppConfig(mockConfig, mockServiceConfig, runMode, "appName")
+        val testAppConfig = new AppConfig(mockConfig, mockServiceConfig, runMode, mockLanguageUtils, "appName")
 
         testAppConfig.externalGetEORILink(atarService) shouldBe ApplicationController.startRegister(atarService).url
       }

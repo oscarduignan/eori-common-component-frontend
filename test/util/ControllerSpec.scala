@@ -35,6 +35,7 @@ import play.api.i18n.Lang._
 import play.api.test.NoMaterializer
 import uk.gov.hmrc.eoricommoncomponent.frontend.config.AppConfig
 import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
+import uk.gov.hmrc.play.language.LanguageUtils
 
 import scala.concurrent.ExecutionContext.global
 import scala.concurrent.Future
@@ -43,6 +44,7 @@ import scala.util.Random
 trait ControllerSpec extends UnitSpec with MockitoSugar with I18nSupport with Injector with TestData {
 
   implicit val messagesApi: MessagesApi = instanceOf[MessagesApi]
+  val languageUtils                     = instanceOf[LanguageUtils]
 
   implicit def materializer: Materializer = NoMaterializer
 
@@ -68,7 +70,8 @@ trait ControllerSpec extends UnitSpec with MockitoSugar with I18nSupport with In
 
   private val serviceConfig = new ServicesConfig(config, runMode)
 
-  val appConfig: AppConfig = new AppConfig(config, serviceConfig, runMode, "eori-common-component-frontend")
+  val appConfig: AppConfig =
+    new AppConfig(config, serviceConfig, runMode, languageUtils, "eori-common-component-frontend")
 
   protected def assertNotLoggedInUserShouldBeRedirectedToLoginPage(
     mockAuthConnector: AuthConnector,

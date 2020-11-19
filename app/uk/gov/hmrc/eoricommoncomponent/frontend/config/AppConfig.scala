@@ -18,9 +18,11 @@ package uk.gov.hmrc.eoricommoncomponent.frontend.config
 
 import javax.inject.{Inject, Named, Singleton}
 import play.api.Configuration
-import uk.gov.hmrc.eoricommoncomponent.frontend.controllers.routes.ApplicationController
+import play.api.i18n.Lang
+import uk.gov.hmrc.eoricommoncomponent.frontend.controllers.routes.{ApplicationController, EoriLanguageController}
 import uk.gov.hmrc.eoricommoncomponent.frontend.models.{Journey, Service}
 import uk.gov.hmrc.play.bootstrap.config.{RunMode, ServicesConfig}
+import uk.gov.hmrc.play.language.LanguageUtils
 
 import scala.concurrent.duration.Duration
 import scala.util.matching.Regex
@@ -30,6 +32,7 @@ class AppConfig @Inject() (
   config: Configuration,
   servicesConfig: ServicesConfig,
   runMode: RunMode,
+  languageUtils: LanguageUtils,
   @Named("appName") val appName: String
 ) {
 
@@ -133,5 +136,10 @@ class AppConfig @Inject() (
       config.get[String](s"microservice.services.eori-common-component-hods-proxy.$proxyServiceName.context")
     s"$baseUrl/$serviceContext"
   }
+
+  def languageMap: Map[String, Lang] =
+    languageUtils.onlyAvailableLanguages(Map("english" -> Lang("en"), "cymraeg" -> Lang("cy")))
+
+  def routeToSwitchLanguage = (lang: String) => EoriLanguageController.switchToLanguage(lang)
 
 }
