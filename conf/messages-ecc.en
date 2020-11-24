@@ -209,3 +209,9 @@ cds.start-page.help.telephone2=Monday to Friday, 8am to 6pm (closed bank holiday
 cds.start-page.help.telephone.link=Find out about call charges
 
 # Start Page (end)
+
+cds.subscription.outcomes.success.extra.information.heading=What happens next
+cds.subscription.outcomes.success.extra.information.paragraph1=Your application for an EORI has been successful. You will be able to use {0} in two hours. Go to GOV.UK and search for {0}.
+cds.subscription.outcomes.success.extra.information.paragraph2=You can use your EORI to move goods in 48 hours. It will appear on the EORI validation checker within 5 days. It has no expiry date.
+cds.subscription.outcomes.success.extra.information.paragraph3=Please take a note of the number for future reference.
+cds.subscription.outcomes.success.extra.information.paragraph4=You should only share it with trusted business partners or approved customs representatives. For example, you should give it to your courier or freight forwarder. They will use it to make customs declarations on your behalf.
