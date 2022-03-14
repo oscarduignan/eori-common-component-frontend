@@ -16,14 +16,13 @@
 
 @import play.api.i18n._
 @import play.api.data.Form
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(govukInput: GovukInput)
 
 @(
         form: Form[_],
-        id: String,
-        name: String,
         label: String,
         inputType: String = "text",
         isPageHeading: Boolean,
@@ -37,8 +36,6 @@
 )(implicit messages: Messages)
 
 @govukInput(Input(
-    id,
-    name,
     classes = classes.fold("")(x => x),
     label = Label(
         content = Text(messages(label, headingMessageArgs:_*)),
@@ -48,10 +45,8 @@
     hint = hint.map(hintHtml => Hint(
         content = HtmlContent(hintHtml)
     )),
-    value = form(name).value,
     inputType = inputType,
     autocomplete = autocomplete,
     spellcheck = spellcheck,
     prefix = prefix,
-    errorMessage = form(name).error.map(err => ErrorMessage(content = Text(messages(s"${err.message}", err.args:_*))))
-))
+).withFormField(form(name)))
